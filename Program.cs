@@ -10,11 +10,18 @@ namespace preliminarilyEvents
             string fileName = "bigimage.jpg";
 
             var imageDownloader = new ImageDownloader();
+
             imageDownloader.ImageStarted += message => Console.WriteLine(message);
-            imageDownloader.Download(remoteUri, fileName);
             imageDownloader.ImageCompleted += message => Console.WriteLine(message);
-            Console.WriteLine("Нажмите любую клавишу для выхода");
-            Console.ReadKey();
+
+            var task = imageDownloader.Download(remoteUri, fileName);
+
+            Console.WriteLine("Нажмите клавишу A для выхода или любую другую клавишу для проверки статуса скачивания");
+
+            while (Console.ReadKey().Key != ConsoleKey.A)
+            {
+                Console.WriteLine($" {task.IsCompleted}");
+            }
 
         }
 
